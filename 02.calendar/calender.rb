@@ -1,13 +1,26 @@
+#!/usr/bin/env ruby
+
 require 'date'
+require 'optparse'
 
-start_day = Date.new(2021, 6, +1)
-last_day = Date.new(2021, 6, -1)
+options = ARGV.getopts("y:", "m:") 
+year = options["y"].to_i
+month = options["m"].to_i
+  if options["y"] == nil  || options["m"] == nil
+    year = Date.today.year
+    month = Date.today.month
+  end
+puts "#{month}#{"月 "}#{year}".center(20)
 
-puts "日月火水木金土"
+start_day = Date.new(year, month, +1)
+last_day = Date.new(year, month, -1)
+
+puts ["日", "月", "火", "水", "木", "金", "土"].join(" ")
+print "   " * start_day.wday
 (start_day..last_day).each do |x|
+  print x.strftime('%e') + " "
   if x.saturday?
-    puts x.day
-  else
-    print x.strftime('%e')
+    print "\n" 
   end
 end
+print "\n"
