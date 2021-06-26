@@ -6,7 +6,13 @@ require 'optparse'
 options = ARGV.getopts("y:", "m:") 
 year = options["y"].to_i
 month = options["m"].to_i
-  if options["y"] == nil  || options["m"] == nil
+  if options["y"] != nil && options["m"] == nil
+    year = options["y"].to_i
+    month = Date.today.month
+  elsif options["y"] == nil && options["m"] != nil
+    year = Date.today.year
+    month = options["m"].to_i
+  else options["y"] == nil && options["m"] == nil
     year = Date.today.year
     month = Date.today.month
   end
