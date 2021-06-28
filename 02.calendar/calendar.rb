@@ -4,18 +4,14 @@ require 'date'
 require 'optparse'
 
 options = ARGV.getopts("y:", "m:") 
-year = options["y"].to_i
-month = options["m"].to_i
-  if options["y"] != nil && options["m"] == nil
-    year = options["y"].to_i
-    month = Date.today.month
-  elsif options["y"] == nil && options["m"] != nil
-    year = Date.today.year
-    month = options["m"].to_i
-  else options["y"] == nil && options["m"] == nil
-    year = Date.today.year
-    month = Date.today.month
-  end
+year = Date.today.year
+month = Date.today.month
+if options["y"]
+  year = options["y"].to_i
+end
+if options["m"]
+  month = options["m"].to_i
+end
 puts "#{month}#{"月 "}#{year}".center(20)
 
 start_day = Date.new(year, month, +1)
