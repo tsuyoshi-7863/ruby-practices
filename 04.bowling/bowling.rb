@@ -31,7 +31,7 @@ frames.each_with_index do |frame, n|
     if frame[0] == 10
       if frames[n + 1][0] != 10
         point += 10 + frames[n + 1].sum
-      elsif frames[n + 1][0] == 10
+      else
         point += 10 + frames[n + 1][0] + frames[n + 2][0]
       end
     elsif frame.sum == 10
@@ -39,8 +39,7 @@ frames.each_with_index do |frame, n|
     else
       point += frame.sum
     end
-  end
-  if n == 8
+  elsif n == 8
     point += if frame[0] == 10
                10 + frames[n + 1][0] + frames[n + 1][1]
              elsif frame.sum == 10
@@ -48,7 +47,8 @@ frames.each_with_index do |frame, n|
              else
                frame.sum
              end
+  else
+    point += frames[9].sum if n == 9
   end
-  point += frames[9].sum if n == 9
 end
 puts point
