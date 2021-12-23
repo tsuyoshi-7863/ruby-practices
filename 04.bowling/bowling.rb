@@ -1,6 +1,14 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+def strike?(frame)
+  frame[0] == 10
+end
+
+def spare?(frame)
+  frame.sum == 10
+end
+
 score = ARGV[0]
 scores = score.split(',')
 shots = []
@@ -28,21 +36,21 @@ end
 point = 0
 frames.each_with_index do |frame, n|
   if n < 8
-    if frame[0] == 10
-      if frames[n + 1][0] != 10
-        point += 10 + frames[n + 1].sum
-      else
+    if strike?(frame)
+      if strike?(frames[n + 1])
         point += 10 + frames[n + 1][0] + frames[n + 2][0]
+      else
+        point += 10 + frames[n + 1].sum
       end
-    elsif frame.sum == 10
+    elsif spare?(frame)
       point += 10 + frames[n + 1][0]
     else
       point += frame.sum
     end
   elsif n == 8
-    point += if frame[0] == 10
+    point += if strike?(frame)
                10 + frames[n + 1][0] + frames[n + 1][1]
-             elsif frame.sum == 10
+             elsif spare?(frame)
                10 + frames[n + 1][0]
              else
                frame.sum
